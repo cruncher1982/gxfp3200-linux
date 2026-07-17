@@ -25,9 +25,9 @@ int gxfp3200_hw_reset(struct gxfp3200_device *gxfp)
 		return 0;
 	}
 
-	gpiod_set_value_cansleep(gxfp->reset_gpio, 0);
-	usleep_range(5000, 6000);
 	gpiod_set_value_cansleep(gxfp->reset_gpio, 1);
+	usleep_range(5000, 6000);
+	gpiod_set_value_cansleep(gxfp->reset_gpio, 0);
 	usleep_range(10000, 12000);
 	return 0;
 }
