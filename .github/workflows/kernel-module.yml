@@ -1,0 +1,18 @@
+name: Kernel module
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install kernel build dependencies
+        run: sudo apt-get update && sudo apt-get install -y linux-headers-$(uname -r) build-essential
+      - name: Build external module
+        run: make -C /lib/modules/$(uname -r)/build M=$GITHUB_WORKSPACE/kernel modules
+      - name: Check SPDX headers
+        run: |
+          test -z "$(rg --files-without-match 'SPDX-License-Identifier:' --glob '*.[ch]' kernel)"

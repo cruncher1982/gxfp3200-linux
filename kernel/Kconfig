@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config SPI_GXFP3200
+	tristate "Goodix GXFP3200 SPI fingerprint sensor"
+	depends on SPI
+	depends on ACPI || OF
+	select GPIOLIB
+	help
+	  Say M here to build a driver skeleton for Goodix GXFP3200 SPI
+	  fingerprint sensors. The driver exposes diagnostic raw SPI controls
+	  through debugfs for protocol development.
