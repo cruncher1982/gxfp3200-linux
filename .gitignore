@@ -1,0 +1,19 @@
+# Kernel external-module build products
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.o
+*.order
+*.symvers
+.modules.order
+Module.symvers
+modules.order
+.kernel.cmd
+.tmp_versions/
+
+# Editor and test artifacts
+*~
+*.swp
+*.pyc
+__pycache__/
