@@ -12,12 +12,20 @@ GPIO handling, optional `vdd`/`vddio` regulators, suspend/resume power handling,
 retrying SPI transport helpers, and a deliberately privileged debugfs interface
 for protocol research. The sensor protocol has not been recovered yet.
 
-## Build the external kernel module
+## Build, install, and test the external kernel module
+
+For a quick one-shot build and load test:
 
 ```sh
-make -C /lib/modules/$(uname -r)/build M="$PWD/kernel" modules
-sudo insmod kernel/gxfp3200.ko
+./scripts/gxfp3200-build-install-test.sh build
+./scripts/gxfp3200-build-install-test.sh load
 ```
+
+The helper wraps the usual external-module `make` and `insmod` commands.
+
+For prerequisites, verification commands, debugfs test steps, dynamic-debug
+tracing, cleanup, and optional persistent installation, see
+[Build, install, and test the GXFP3200 driver](docs/build-install-test.md).
 
 To make it selectable in a kernel source tree, include `kernel/Kconfig` from
 that tree's SPI Kconfig and add `obj-$(CONFIG_SPI_GXFP3200) += gxfp3200/` to its
