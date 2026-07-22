@@ -29,8 +29,11 @@ When debugfs is mounted, the driver creates
 `/sys/kernel/debug/<spi-device-name>/`. `status` reports power and IRQ state;
 writing anything to `reset` pulses the reset GPIO. `send` accepts an even-length,
 contiguous hexadecimal byte string (for example `0102a0`), and `receive` clocks
-and returns 256 bytes. These controls issue arbitrary traffic to the sensor and
-are intended only for local protocol investigation.
+and returns 256 bytes. `exchange` accepts `<rx_len> <hex-bytes>` (for example
+`16 0102a0`), runs one write-then-read SPI exchange, and returns the last
+successful response as space-separated hexadecimal bytes. `status` also reports
+the stored exchange response length. These controls issue arbitrary traffic to
+the sensor and are intended only for local protocol investigation.
 
 ## Roadmap
 

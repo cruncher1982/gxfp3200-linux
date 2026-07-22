@@ -12,6 +12,7 @@
 #define GXFP3200_DRIVER_NAME "gxfp3200"
 #define GXFP3200_SPI_RETRIES 3
 #define GXFP3200_DEBUG_READ_SIZE 256
+#define GXFP3200_RESEARCH_MAX_XFER 4096
 
 struct dentry;
 
@@ -23,6 +24,9 @@ struct gxfp3200_device {
 	struct regulator *vdd;
 	struct regulator *vddio;
 	struct dentry *debugfs_dir;
+	struct mutex research_lock;
+	u8 research_response[GXFP3200_RESEARCH_MAX_XFER];
+	size_t research_response_len;
 	struct completion irq_completion;
 	atomic_t irq_count;
 	bool supplies_acquired;
@@ -34,6 +38,9 @@ int gxfp3200_spi_write(struct gxfp3200_device *gxfp, const void *buf,
 int gxfp3200_spi_read(struct gxfp3200_device *gxfp, void *buf, size_t len);
 int gxfp3200_spi_transaction(struct gxfp3200_device *gxfp, const void *tx_buf,
 			     size_t tx_len, void *rx_buf, size_t rx_len);
+int gxfp3200_protocol_exchange(struct gxfp3200_device *gxfp,
+			       const void *tx_buf, size_t tx_len,
+			       void *rx_buf, size_t rx_len);
 
 int gxfp3200_gpio_init(struct gxfp3200_device *gxfp);
 int gxfp3200_hw_reset(struct gxfp3200_device *gxfp);

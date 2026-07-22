@@ -17,6 +17,7 @@ static int gxfp3200_probe(struct spi_device *spi)
 
 	gxfp->spi = spi;
 	mutex_init(&gxfp->transfer_lock);
+	mutex_init(&gxfp->research_lock);
 	init_completion(&gxfp->irq_completion);
 	atomic_set(&gxfp->irq_count, 0);
 	spi_set_drvdata(spi, gxfp);
